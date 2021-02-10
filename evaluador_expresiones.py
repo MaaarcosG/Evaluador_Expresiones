@@ -20,10 +20,10 @@ class Evaluador:
         else:
             return False
 
-    # verificación si numero 
+    # verificación si numero, aceptamos doubles 
     def isNumber(self, value):
         try:
-            int(value)
+            float(value)
             return True
         except ValueError:
             #print('THE CHARACTER IS INCORRECT')
@@ -35,9 +35,12 @@ class Evaluador:
            
     def convertToNumber(self):
         if self.number_account !=  '':
-            self.output.append(int(self.number_account))
+            self.output.append(float(self.number_account))
             self.number_account = ''
             return self.number_account
+
+    def deletePoint(self, point):
+    	return point.lstrip('.')
 
     def evaluator(self, exp):
         for i in range(len(exp)):
@@ -63,7 +66,7 @@ class Evaluador:
                 self.operation.pop()
 
         if  self.number_account != '':
-            self.output.append(int(self.number_account))
+            self.output.append(float(self.number_account))
         
         while len(self.operation) > 0:
             value = self.operation.pop()
@@ -77,6 +80,7 @@ class Evaluador:
                 self.operation.append(value)
             if self.possible_Operation(value):
                 a, b = self.operation.pop(), self.operation.pop()
+                #print(a, b)
                 if (value == '+'):
                     self.operation.append(a+b)
                 if (value == '-'):
@@ -85,16 +89,17 @@ class Evaluador:
                     self.operation.append(b/a)
                 if (value == '*'):
                     self.operation.append(a*b)
+                if (value == '^'):
+                	self.operation.append(pow(b,a))
             '''
             elif self.possible_Operation(value) == '**':
                 a = self.operation.pop()
                 self.operation.append(pow(a,a))
             '''
-        print(f'result: {self.operation[0]}')
+        print('Resultado de la Expresion: ', self.operation[0])
 
 if __name__ == "__main__": 
     expression = input("Ingrese una expresion aritmetica: ")
-    expression.replace(' ', '')
     #print(expression)
     obj = Evaluador(len(expression))
     obj.evaluator(expression)
