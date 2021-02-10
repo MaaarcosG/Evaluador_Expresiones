@@ -1,6 +1,3 @@
-# REFERENCIAS:
-    # https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
-
 class Evaluador:
     def __init__(self, expression):
         self.expression = expression
@@ -32,11 +29,8 @@ class Evaluador:
 
     # verificacion de operaciones
     def possible_Operation(self, data):
-        if (data == '+') or ( data == '-') or (data == '/') or (data == '^') or (data == '*'):
-            return True
-        else:
-            return False
-    
+        return True if (data == '+') or ( data == '-') or (data == '/') or (data == '^') or (data == '*') else False
+           
     def convertToNumber(self):
         if self.number_account !=  '':
             self.output.append(int(self.number_account))
@@ -60,11 +54,11 @@ class Evaluador:
             elif value == ')':
                 self.convertToNumber()
                 while (len(self.operation)>0) and (self.operation[-1] != '('):
-                    self.output.append(self.operation)
+                    self.output.append(self.operation.pop())
                     if (len(self.operation) == 0):
                         print('Imposible Parenthesization')
                         exit(-1)
-                self.operation()
+                self.operation.pop()
 
         if  self.number_account != '':
             self.output.append(int(self.number_account))
@@ -88,7 +82,7 @@ class Evaluador:
                 if (value == '-'):
                     self.operation.append(a-b)
                 if (value == '/'):
-                    self.operation.append(a/b)
+                    self.operation.append(b/a)
                 if (value == '*'):
                     self.operation.append(a*b)
                 if (value == '^'):
