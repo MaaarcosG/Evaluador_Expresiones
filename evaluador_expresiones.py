@@ -2,10 +2,11 @@ class Evaluador:
     def __init__(self, expression):
         self.expression = expression
         self.precedence = {
-            '+': 0, 
-	        '-': 0, 
-            '*': 1, 
-            '/': 1
+            '+': 1, 
+	        '-': 1, 
+            '*': 2, 
+            '/': 2,
+            '^': 3
         }
         self.output = []
         self.operation = []
@@ -25,6 +26,7 @@ class Evaluador:
             int(value)
             return True
         except ValueError:
+            #print('THE CHARACTER IS INCORRECT')
             return False
 
     # verificacion de operaciones
@@ -70,8 +72,6 @@ class Evaluador:
                 exit(-1)
             self.output.append(value)
 
-        print(f'output: {self.output}')
-
         for value in self.output:
             if self.isNumber(value):
                 self.operation.append(value)
@@ -85,9 +85,11 @@ class Evaluador:
                     self.operation.append(b/a)
                 if (value == '*'):
                     self.operation.append(a*b)
-                if (value == '^'):
-                    self.operation.append(a^b)
-        
+            '''
+            elif self.possible_Operation(value) == '**':
+                a = self.operation.pop()
+                self.operation.append(pow(a,a))
+            '''
         print(f'result: {self.operation[0]}')
 
 if __name__ == "__main__": 
